@@ -10,7 +10,11 @@ contract Tether {
 
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-    event Approval(address indexed _owner, address indexed _to, uint256 _value);
+    event Approval(
+        address indexed _owner,
+        address indexed _spender,
+        uint256 _value
+    );
 
     mapping(address => uint256) public balanceof;
 
@@ -39,7 +43,7 @@ contract Tether {
         address _to,
         uint256 _value
     ) public returns (bool success) {
-        require(_value >= balanceof[_from]);
+        require(_value <= balanceof[_from]);
         require(_value <= allowance[_from][msg.sender]);
         // add balance for transfrFrom
         balanceof[_to] += _value;
